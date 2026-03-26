@@ -378,7 +378,7 @@ function App() {
             </div>
             <div className="space-y-3">
               <p className="text-sm font-medium uppercase tracking-[0.24em] text-sky-700">
-                目录桥
+                OutlineBridge
               </p>
               <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
                 用任意视觉大模型提取目录，再在浏览器里生成带书签的 PDF。

@@ -1,8 +1,8 @@
 {
-  "name": "muluqiao",
+  "name": "outline-bridge",
   "private": true,
   "version": "0.0.0",
-  "description": "目录桥：把印刷版目录页转成 PDF 书签的纯前端工具。",
+  "description": "OutlineBridge：把印刷版目录页转成 PDF 书签的纯前端工具。",
   "type": "module",
   "engines": {
     "node": ">=22.12.0"

@@ -1,6 +1,6 @@
-# 目录桥
+# OutlineBridge
 
-目录桥是一个适合部署到 GitHub Pages 的纯前端工具，用来把书籍的印刷版目录页转换成 PDF 书签。
+OutlineBridge 是一个适合部署到 GitHub Pages 的纯前端工具，用来把书籍的印刷版目录页转换成 PDF 书签。
 
 ## 它解决什么问题
 
@@ -69,11 +69,11 @@ npm run check
 
 默认推荐自定义域名：
 
-- `mulu.hicancan.top`
+- `outline.hicancan.top`
 
 如果你启用这个域名，需要同时完成：
 
-1. 在 DNS 里把 `mulu.hicancan.top` 指向 GitHub Pages
+1. 在 DNS 里把 `outline.hicancan.top` 指向 GitHub Pages
 2. 保证构建产物里存在 `CNAME`
 
 ## 目录 JSON 格式
