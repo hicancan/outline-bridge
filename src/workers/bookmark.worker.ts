@@ -11,6 +11,7 @@ const PYODIDE_INDEX_URL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/
 type PyodideRuntime = {
   globals: {
     set: (name: string, value: unknown) => void
+    delete?: (name: string) => void
   }
   loadPackage: (name: string) => Promise<void>
   pyimport: (name: string) => { install: (specifier: string) => Promise<void>; destroy?: () => void }
@@ -24,9 +25,11 @@ workerScope.addEventListener('message', async (event: MessageEvent<BookmarkWorke
     return
   }
 
+  let pyodide: PyodideRuntime | null = null
+
   try {
     postProgress('正在 Worker 中加载 Pyodide…')
-    const pyodide = await ensurePyodide()
+    pyodide = await ensurePyodide()
 
     postProgress('正在准备书签数据…')
     pyodide.globals.set('source_pdf_bytes', new Uint8Array(event.data.pdfBytes))
@@ -50,6 +53,9 @@ workerScope.addEventListener('message', async (event: MessageEvent<BookmarkWorke
           : 'Worker 内的 PDF 书签生成失败。',
     }
     workerScope.postMessage(response)
+  } finally {
+    pyodide?.globals.delete?.('source_pdf_bytes')
+    pyodide?.globals.delete?.('outline_entries')
   }
 })
 
@@ -96,11 +102,10 @@ function base64ToArrayBuffer(base64: string) {
 const PYTHON_BUILD_SCRIPT = `
 import base64
 import io
-import js
 from pypdf import PdfReader, PdfWriter
 
-source_pdf = bytes(js.source_pdf_bytes.to_py())
-entries = js.outline_entries.to_py()
+source_pdf = bytes(source_pdf_bytes.to_py())
+entries = outline_entries.to_py()
 
 reader = PdfReader(io.BytesIO(source_pdf))
 writer = PdfWriter()
